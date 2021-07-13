@@ -4,8 +4,8 @@ ___
 ___
 Derian Batallas
 ___
-Joaquin Cabezas
+Joaquín Cabezas
 ___
 Daniel González
 ___
-Jose Manuel Garrido
+José Manuel Garrido
