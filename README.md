@@ -2,10 +2,10 @@
 ___
 **Integrantes del grupo 2:**
 ___
-Derian Batallas
+Derian Yeray Batallas Minda
 ___
-Joaquín Cabezas
+Joaquín Cabezas Berjillos
 ___
-Daniel González
+Daniel González Garrido
 ___
 José Manuel Garrido
