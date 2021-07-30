@@ -1,29 +1,48 @@
-$(function () {
-    new Chart(document.getElementById("line_chart").getContext("2d"), getChartJs('line'));
-    new Chart(document.getElementById("bar_chart").getContext("2d"), getChartJs('bar'));
-    new Chart(document.getElementById("radar_chart").getContext("2d"), getChartJs('radar'));
-    new Chart(document.getElementById("pie_chart").getContext("2d"), getChartJs('pie'));
-});
+ import {
+    getDatosFecha,
+    getDatosFechaPais,
+    getSumDatos,
+    getSumDatosPais,
+   } from '../../API/LlamadaApi.js';
 
-function getChartJs(type) {
-    var config = null;
+/* $(function () {
+    new Chart(document.getElementById("line_chart").getContext("2d"), getChartJs('line'));
+     new Chart(document.getElementById("bar_chart").getContext("2d"), getChartJs('bar'));
+    new Chart(document.getElementById("radar_chart").getContext("2d"), getChartJs('radar'));
+    new Chart(document.getElementById("pie_chart").getContext("2d"), getChartJs('pie')); 
+}); */
+
+function getChartJs(type, datos) {
+    let config = null;
 
     if (type === 'line') {
+        let countries = [];
+        let casos = [];
+        let muertes = [];
+        let entries = null;
+        
+        for(let i = 0; i < 6; i++) {
+            entries = datos.entries[i];
+            countries.push(entries.country.countriesAndTerritories);
+            casos.push(entries.cases);
+            muertes.push(entries.deaths);
+        }
+
         config = {
             type: 'line',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: countries,
                 datasets: [{
-                    label: "My First dataset",
-                    data: [65, 59, 80, 81, 56, 55, 40],
+                    label: "Casos",
+                    data: casos,
                     borderColor: 'rgba(0, 188, 212, 0.75)',
                     backgroundColor: 'rgba(0, 188, 212, 0.3)',
                     pointBorderColor: 'rgba(0, 188, 212, 0)',
                     pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
                     pointBorderWidth: 1
                 }, {
-                        label: "My Second dataset",
-                        data: [28, 48, 40, 19, 86, 27, 90],
+                        label: "Muertes",
+                        data: muertes,
                         borderColor: 'rgba(233, 30, 99, 0.75)',
                         backgroundColor: 'rgba(233, 30, 99, 0.3)',
                         pointBorderColor: 'rgba(233, 30, 99, 0)',
@@ -37,18 +56,29 @@ function getChartJs(type) {
             }
         }
     }
-    else if (type === 'bar') {
+     else if (type === 'bar') {
+        let countries = [];
+        let casos = [];
+        let muertes = [];
+        let entries = null;
+        
+        for(let i = 0; i < 6; i++) {
+            entries = datos.entries[i];
+            countries.push(entries.country.countriesAndTerritories);
+            casos.push(entries.cases);
+            muertes.push(entries.deaths);
+        }
         config = {
             type: 'bar',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: countries,
                 datasets: [{
-                    label: "My First dataset",
-                    data: [65, 59, 80, 81, 56, 55, 40],
+                    label: "Casos",
+                    data: casos,
                     backgroundColor: 'rgba(0, 188, 212, 0.8)'
                 }, {
-                        label: "My Second dataset",
-                        data: [28, 48, 40, 19, 86, 27, 90],
+                        label: "Muertes",
+                        data: muertes,
                         backgroundColor: 'rgba(233, 30, 99, 0.8)'
                     }]
             },
@@ -59,21 +89,32 @@ function getChartJs(type) {
         }
     }
     else if (type === 'radar') {
+        let countries = [];
+        let casos = [];
+        let muertes = [];
+        let entries = null;
+        
+        for(let i = 0; i < 6; i++) {
+            entries = datos.entries[i];
+            countries.push(entries.country.countriesAndTerritories);
+            casos.push(entries.cases);
+            muertes.push(entries.deaths);
+        }
         config = {
             type: 'radar',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: [],
                 datasets: [{
-                    label: "My First dataset",
-                    data: [65, 25, 90, 81, 56, 55, 40],
+                    label: "Casos",
+                    data: casos,
                     borderColor: 'rgba(0, 188, 212, 0.8)',
                     backgroundColor: 'rgba(0, 188, 212, 0.5)',
                     pointBorderColor: 'rgba(0, 188, 212, 0)',
                     pointBackgroundColor: 'rgba(0, 188, 212, 0.8)',
                     pointBorderWidth: 1
                 }, {
-                        label: "My Second dataset",
-                        data: [72, 48, 40, 19, 96, 27, 100],
+                        label: "Muertes",
+                        data: muertes,
                         borderColor: 'rgba(233, 30, 99, 0.8)',
                         backgroundColor: 'rgba(233, 30, 99, 0.5)',
                         pointBorderColor: 'rgba(233, 30, 99, 0)',
@@ -88,11 +129,23 @@ function getChartJs(type) {
         }
     }
     else if (type === 'pie') {
+        let countries = [];
+        let casos = [];
+        let muertes = [];
+        let entries = null;
+        
+        for(let i = 0; i < 6; i++) {
+            entries = datos.entries[i];
+            countries.push(entries.country.countriesAndTerritories);
+            casos.push(entries.cases);
+            muertes.push(entries.deaths);
+
+        }
         config = {
             type: 'pie',
             data: {
                 datasets: [{
-                    data: [225, 50, 100, 40],
+                    data: casos,
                     backgroundColor: [
                         "rgb(233, 30, 99)",
                         "rgb(255, 193, 7)",
@@ -115,3 +168,39 @@ function getChartJs(type) {
     }
     return config;
 }
+
+async function getEntriesPorFecha() {
+
+    // let fecha = document.getElementById("fecha").value
+    await getDatosFecha('20/09/2020').then(respuesta => {
+        new Chart(document.getElementById("line_chart").getContext("2d"), getChartJs('line', respuesta));
+    });
+}
+
+getEntriesPorFecha();
+
+// async function getEntriesPorFechaPais(fecha, pais) {
+//     // let fecha = document.getElementById("fecha", "pais").value
+//     await getDatosFechaPais(fecha, pais).then(respuesta => {
+//         new Chart(document.getElementById("bar_chart").getContext("2d"), getChartJs('bar', respuesta));
+//     });
+// }
+// getEntriesPorFechaPais('12/09/2020', 'Angola');
+
+async function getEntriesSumDatos() {
+    // let fecha = document.getElementById().value
+    await getSumDatos().then(respuesta => {
+        new Chart(document.getElementById("radar_chart").getContext("2d"), getChartJs('radar', respuesta));
+    });
+    console.log(respuesta)
+}
+getEntriesSumDatos();
+
+// async function getEntriesSumDatosPais() {
+//     // let fecha = document.getElementById("pais").value
+//     let prueba = await getSumDatosPais('Angola').then(respuesta => {
+//         console.log(respuesta);
+//         new Chart(document.getElementById("pie_chart").getContext("2d"), getChartJs('pie', respuesta));
+//     });
+// }
+// getEntriesSumDatosPais();
